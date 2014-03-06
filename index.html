@@ -10,8 +10,10 @@
     <script src="game.js"></script>
 </head>
 <body>
-    <canvas width="1000" height="900"></canvas>
-    <img id="ship" src="Asteroids_Spaceship.png" alt="Ship" hidden="true">
+    <canvas width="500" height="500"></canvas>
+    <img id="nyan" src="nyan.png" alt="Ship" hidden="true">
+    <img id="grump" src="cateroids.png" alt="Grump" hidden="true">
+    <img id="ammo" src="ammo.png" alt="Ammo" hidden="true">
     <script>
         var canvas = document.getElementsByTagName("canvas")[0];
         new Asteroids.Game(10).start(canvas);

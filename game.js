@@ -7,8 +7,8 @@
     this.timer = Date.now();
   };
 
-  Game.DIM_Y = 900;
-  Game.DIM_X = 1000;
+  Game.DIM_Y = 500;
+  Game.DIM_X = 500;
   Game.FPS = 16;
 
   Game.prototype.addAsteroids = function(numAsteroids) {
