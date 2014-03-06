@@ -26,6 +26,26 @@
     );
 
     ctx.fill();
+
+    // var img = document.getElementById("ship");
+//
+//     var rotateAndCache = function(image, angle) {
+//       var offscreenCanvas = document.createElement('canvas');
+//       var offscreenCtx = offscreenCanvas.getContext('2d');
+//
+//       var size = Math.max(image.width, image.height);
+//       offscreenCanvas.width = size;
+//       offscreenCanvas.height = size;
+//
+//       offscreenCtx.translate(size/2, size/2);
+//       offscreenCtx.rotate(angle + Math.PI/2);
+//       offscreenCtx.drawImage(image, -(image.width/2), -(image.height/2));
+//
+//       return offscreenCanvas;
+//     }
+//
+//     var rotShip = rotateAndCache(img, this.direction);
+//     ctx.drawImage(rotShip, this.pos[1], this.pos[0], this.radius * 3, this.radius * 3);
   }
 
   Ship.prototype.power = function(dir) {

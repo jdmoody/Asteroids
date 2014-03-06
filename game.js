@@ -31,8 +31,8 @@
     var my_game = this;
     root.key('up', function() { my_game.ship.power(-1); } );
     root.key('down', function() { my_game.ship.power(1); } );
-    root.key('left', function() { my_game.ship.turn(1); } );
-    root.key('right', function() { my_game.ship.turn(-1); } );
+    root.key('left', function() { my_game.ship.turn(-1); } );
+    root.key('right', function() { my_game.ship.turn(1); } );
     root.key('space', function() { my_game.ship.fireBullet()} );
   }
 
