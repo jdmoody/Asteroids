@@ -7,6 +7,7 @@
     this.vel = vel;
     this.color = color;
     this.radius = radius;
+    this.delete = false;
   };
 
   Asteroids.inherits(Asteroid, Asteroids.MovingObject);
