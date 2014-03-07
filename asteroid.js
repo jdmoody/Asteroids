@@ -26,12 +26,12 @@
   };
   
   Asteroid.prototype.makeBabies = function(game) {
+    var num = (this.radius === 50 ? 2 : 3)
     if (this.radius > 30) {
-      for (var i = 0; i < 3; i++) {
+      for (var i = 0; i < num; i++) {
         var vel = Asteroid.randomVec();
         var pos = [this.pos[0], this.pos[1]]
         var baby = new Asteroid(pos, vel, this.radius - 10);
-        console.log(baby);
         game.asteroids.push(baby);
       }
     }
@@ -40,10 +40,13 @@
   Asteroid.randomAsteroid = function (dimX, dimY) {
     var randPosY = Math.floor(Math.random() * (dimY + 1));
     var randPosX = Math.floor(Math.random() * (dimX + 1));
-    var randRad = Math.floor(Math.random() * (41) + 10);
+    if (randPosY % 2 === 0) {
+      randPosY = 0;
+    } else { randPosX = 0; }
+    // var randRad = Math.floor(Math.random() * (41) + 10);
     var pos = [randPosY, randPosX];
     var vel = Asteroid.randomVec();
-    return new Asteroid(pos, vel, randRad);
+    return new Asteroid(pos, vel, 50);
   };
 
   Asteroid.randomVec = function () {

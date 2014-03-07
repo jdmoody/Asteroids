@@ -3,8 +3,9 @@
 
   var Game = Asteroids.Game = function(num) {
     this.ship = new Asteroids.Ship();
-    this.asteroids = this.addAsteroids(1);
+    this.asteroids = this.addAsteroids(5);
     this.timer = Date.now();
+    this.points = 0;
   };
 
   Game.DIM_Y = 750;
@@ -28,14 +29,10 @@
 
   Game.prototype.checkKeys = function() {
     var my_game = this;
-    if(key.isPressed("up")) this.ship.power(0.5);
+    if(key.isPressed("up")) this.ship.power(0.25);
     if(key.isPressed("left")) this.ship.turn(-1);
     if(key.isPressed("right")) this.ship.turn(1);
     if(key.isPressed("space")) this.ship.fireBullet();
-    // root.key('up', function() { my_game.ship.power(-1); } );
-    // root.key('left', function() { my_game.ship.turn(-1); } );
-    // root.key('right', function() { my_game.ship.turn(1); } );
-    // root.key('space', function() { my_game.ship.fireBullet()} );
   }
 
   Game.prototype.checkCollisions = function() {
@@ -43,8 +40,8 @@
       if (this.ship.isCollidedWith(this.asteroids[i])) {
         this.timer = Date.now() - this.timer;
         console.log(this.asteroids);
-        alert("You hit an asteroid! You survived " + (this.timer/1000) +
-                                                           " seconds!");
+        // alert("You hit an asteroid! You survived " + (this.timer/1000) +
+//                                                            " seconds!");
         this.stop();
       }
     };
@@ -53,9 +50,9 @@
   Game.prototype.removeAsteroids = function() {
     for(var i = 0; i < this.asteroids.length; i++) {
       if (this.asteroids[i].delete === true) {
+        this.points++;
         var oldAst = this.asteroids.splice(i, 1)[0];
         oldAst.makeBabies(this);
-        console.log(this.asteroids);
       }
     }
     
@@ -100,12 +97,27 @@
     this.removeAsteroids();
 
   };
+  
+  Game.prototype.showTime = function(ctx) {
+    var seconds = Math.floor((Date.now() - this.timer) / 1000);
+    ctx.fillStyle = "black";
+    ctx.font = '25px Atari';
+    ctx.fillText(seconds, 5, 30); 
+  }
+  
+  Game.prototype.showPoints = function(ctx) {
+    ctx.fillStyle = "black";
+    ctx.font = '25 px Atari';
+    ctx.fillText("Points:" + this.points, 5, Game.DIM_Y)
+  }
 
   Game.prototype.step = function(ctx) {
     this.move();
     this.draw(ctx);
     this.checkCollisions();
     this.checkKeys();
+    this.showTime(ctx);
+    this.showPoints(ctx);
   };
 
   Game.prototype.start = function(canvasEl) {

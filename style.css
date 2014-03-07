@@ -1,3 +1,8 @@
 canvas {
   background: #0f4d8f;
 }
+
+@font-face {
+  font-family: 'Atari';
+  src: url(fonts/PressStart2P.ttf);
+}

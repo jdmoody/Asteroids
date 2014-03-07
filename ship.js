@@ -2,12 +2,15 @@
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
   var Ship = Asteroids.Ship = function () {
-    this.pos = [250, 250];
+    console.log(Asteroids.Game.DIM_Y)
+    this.pos = [Asteroids.Game.DIM_Y / 2, Asteroids.Game.DIM_X / 2];
     this.vel = [0, 0];
     this.direction = Math.PI/2;
     
+    this.recharge = Date.now();
     this.radius = 10;
     this.bullets = [];
+    this.hyperbullets = false;
   };
 
   Asteroids.inherits(Ship, Asteroids.MovingObject);
@@ -34,8 +37,13 @@
   };
 
   Ship.prototype.fireBullet = function() {
-    var bullet = new Asteroids.Bullet(this.pos, this.direction);
-    this.bullets.push(bullet);
+    if (((Date.now() - this.recharge) > 200) || this.hyperbullets) {
+      this.recharge = Date.now();
+      var bullet = new Asteroids.Bullet(this.pos, this.direction);
+      this.bullets.push(bullet);
+      var laser = new Audio("sounds/pewpew.wav");
+      laser.play();
+    }
   };
 
 })(this);
