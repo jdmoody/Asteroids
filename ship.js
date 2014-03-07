@@ -3,10 +3,10 @@
 
   var Ship = Asteroids.Ship = function () {
     this.pos = [250, 250];
-    this.direction = Math.PI/2;
     this.vel = [0, 0];
+    this.direction = Math.PI/2;
+    
     this.radius = 10;
-    this.color = "blue";
     this.bullets = [];
   };
 
@@ -25,12 +25,12 @@
   };
 
   Ship.prototype.power = function(dir) {
-    this.vel[0] += dir * Math.sin(this.direction);
-    this.vel[1] += dir * Math.cos(this.direction);
+    this.vel[0] += dir * -Math.sin(this.direction);
+    this.vel[1] += dir * -Math.cos(this.direction);
   };
 
   Ship.prototype.turn = function(dir) {
-    this.direction += dir / 2;
+    this.direction += dir / 5;
   };
 
   Ship.prototype.fireBullet = function() {

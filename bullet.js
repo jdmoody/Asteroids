@@ -8,7 +8,6 @@
     this.pos = bullet_start;
     this.vel = [velY, velX];
     this.radius = 3;
-    this.color = "red";
     this.direction = direction;
     this.delete = false;
   }
@@ -23,7 +22,7 @@
     ctx.save();
     ctx.translate(this.pos[1], this.pos[0]);
     ctx.scale(this.radius/30, this.radius/30);
-    ctx.rotate(this.direction);
+    ctx.rotate(Math.random());
     ctx.drawImage(img, xOffset, yOffset);
     ctx.restore();
   }

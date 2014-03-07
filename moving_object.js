@@ -16,16 +16,16 @@
   };
 
   MovingObject.prototype.move = function (DIM_Y, DIM_X) {
-    possY = (this.pos[0] + this.vel[0]);
-    possX = (this.pos[1] + this.vel[1]);
+    posY = (this.pos[0] + this.vel[0]);
+    posX = (this.pos[1] + this.vel[1]);
 
-    if (possY < 0){
-      this.pos[0] = DIM_Y - Math.abs(possY);
+    if (posY < 0){
+      this.pos[0] = DIM_Y - Math.abs(posY);
     } else {
       this.pos[0] = (this.pos[0] + this.vel[0]) % DIM_Y;
     }
-    if (possX < 0){
-      this.pos[1] = DIM_X - Math.abs(possX);
+    if (posX < 0){
+      this.pos[1] = DIM_X - Math.abs(posX);
     } else {
       this.pos[1] = (this.pos[1] + this.vel[1]) % DIM_X;
     }

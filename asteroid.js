@@ -2,13 +2,12 @@
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
 
-  var Asteroid = Asteroids.Asteroid = function (pos, vel, radius, color) {
+  var Asteroid = Asteroids.Asteroid = function (pos, vel, radius) {
     this.pos = pos;
     this.vel = vel;
-    this.color = color;
     this.radius = radius;
     this.delete = false;
-    this.direction = Math.random();
+    this.direction = Math.random() * (Math.PI + 1);
   };
 
   Asteroids.inherits(Asteroid, Asteroids.MovingObject);
@@ -24,7 +23,19 @@
     ctx.rotate(this.direction);
     ctx.drawImage(img, xOffset, yOffset);
     ctx.restore();
-  }
+  };
+  
+  Asteroid.prototype.makeBabies = function(game) {
+    if (this.radius > 30) {
+      for (var i = 0; i < 3; i++) {
+        var vel = Asteroid.randomVec();
+        var pos = [this.pos[0], this.pos[1]]
+        var baby = new Asteroid(pos, vel, this.radius - 10);
+        console.log(baby);
+        game.asteroids.push(baby);
+      }
+    }
+  };
 
   Asteroid.randomAsteroid = function (dimX, dimY) {
     var randPosY = Math.floor(Math.random() * (dimY + 1));
@@ -32,8 +43,8 @@
     var randRad = Math.floor(Math.random() * (41) + 10);
     var pos = [randPosY, randPosX];
     var vel = Asteroid.randomVec();
-    return new Asteroid(pos, vel, randRad, "black");
-  }
+    return new Asteroid(pos, vel, randRad);
+  };
 
   Asteroid.randomVec = function () {
     randVelY = (Math.random() * (5) - 2);
