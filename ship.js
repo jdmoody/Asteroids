@@ -2,7 +2,6 @@
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
   var Ship = Asteroids.Ship = function () {
-    console.log(Asteroids.Game.DIM_Y)
     this.pos = [Asteroids.Game.DIM_Y / 2, Asteroids.Game.DIM_X / 2];
     this.vel = [0, 0];
     this.direction = Math.PI/2;

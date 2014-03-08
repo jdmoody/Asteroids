@@ -1,15 +1,20 @@
 (function(root){
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  var Game = Asteroids.Game = function(num) {
+  var Game = Asteroids.Game = function(num, canvasEl) {
+    var ctx = canvasEl.getContext("2d");
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+    Game.DIM_Y = window.innerHeight;
+    Game.DIM_X = window.innerWidth;
+    canvasEl.width = Game.DIM_X;
+    canvasEl.height = Game.DIM_Y - 5;
     this.ship = new Asteroids.Ship();
     this.asteroids = this.addAsteroids(5);
     this.timer = Date.now();
     this.points = 0;
   };
 
-  Game.DIM_Y = 750;
-  Game.DIM_X = 1000;
   Game.FPS = 16;
 
   Game.prototype.addAsteroids = function(numAsteroids) {
@@ -108,27 +113,32 @@
   Game.prototype.showPoints = function(ctx) {
     ctx.fillStyle = "black";
     ctx.font = '25 px Atari';
-    ctx.fillText("Points:" + this.points, 5, Game.DIM_Y)
+    ctx.fillText("Points:" + this.points, 5, Game.DIM_Y - 5)
   }
 
   Game.prototype.step = function(ctx) {
     this.move();
     this.draw(ctx);
-    this.checkCollisions();
-    this.checkKeys();
     this.showTime(ctx);
     this.showPoints(ctx);
+    this.checkCollisions();
+    this.checkKeys();
+  };
+  
+  Game.prototype.startMeow = function() {
+    alert("meow!");
+    var meow = new Audio("sounds/meow.mp3");
+    meow.play();
   };
 
   Game.prototype.start = function(canvasEl) {
-    canvasEl.width = Game.DIM_X
-    canvasEl.height = Game.DIM_Y
+
     var ctx = canvasEl.getContext("2d");
     var game = this;
     this.game_timer = window.setInterval(function () {
       game.step(ctx);
     }, Game.FPS);
-
+    this.startMeow();
   };
 
   Game.prototype.stop = function() {
