@@ -9,7 +9,7 @@
     this.recharge = Date.now();
     this.radius = 10;
     this.bullets = [];
-    this.hyperbullets = false;
+    this.hyperbullets = true;
   };
 
   Asteroids.inherits(Ship, Asteroids.MovingObject);

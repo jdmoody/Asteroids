@@ -6,18 +6,24 @@
     <script src="keymaster.js"></script>
     <script src="moving_object.js"></script>
     <script src="bullet.js"></script>
+    <script src="explosion.js"></script>
     <script src="asteroid.js"></script>
     <script src="ship.js"></script>
     <script src="game.js"></script>
 </head>
 <body>
     <canvas></canvas>
+    <img id="explosion-0" src="images/explosions/explosion-0.png" hidden="true">
+    <img id="explosion-1" src="images/explosions/explosion-1.png" hidden="true">
+    <img id="explosion-2" src="images/explosions/explosion-2.png" hidden="true">
+    <img id="explosion-3" src="images/explosions/explosion-3.png" hidden="true">
+    <img id="explosion-4" src="images/explosions/explosion-4.png" hidden="true">
     <img id="nyan" src="images/nyan.png" alt="Ship" hidden="true">
     <img id="grump" src="images/cateroids.png" alt="Grump" hidden="true">
     <img id="ammo" src="images/ammo.png" alt="Ammo" hidden="true">
     <script>
         var canvas = document.getElementsByTagName("canvas")[0];
-        new Asteroids.Game(10, canvas).start(canvas);
+        new Asteroids.Game(canvas).start();
     </script>
 </body>
 </html>

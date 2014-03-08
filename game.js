@@ -1,10 +1,10 @@
 (function(root){
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-  var Game = Asteroids.Game = function(num, canvasEl) {
-    var ctx = canvasEl.getContext("2d");
-    ctx.canvas.width = window.innerWidth;
-    ctx.canvas.height = window.innerHeight;
+  var Game = Asteroids.Game = function(canvasEl) {
+    this.ctx = canvasEl.getContext("2d");
+    this.ctx.canvas.width = window.innerWidth;
+    this.ctx.canvas.height = window.innerHeight;
     Game.DIM_Y = window.innerHeight;
     Game.DIM_X = window.innerWidth;
     canvasEl.width = Game.DIM_X;
@@ -13,6 +13,7 @@
     this.asteroids = this.addAsteroids(5);
     this.timer = Date.now();
     this.points = 0;
+    this.level = 0;
   };
 
   Game.FPS = 16;
@@ -44,18 +45,38 @@
     for(var i = 0; i < this.asteroids.length; i++){
       if (this.ship.isCollidedWith(this.asteroids[i])) {
         this.timer = Date.now() - this.timer;
-        console.log(this.asteroids);
-        // alert("You hit an asteroid! You survived " + (this.timer/1000) +
-//                                                            " seconds!");
+        this.deathMessage();
         this.stop();
+        var game = this;
+        key('enter', function() { game.restart(); });
       }
     };
   };
+  
+  Game.prototype.deathMessage = function() {
+    var death = "You've been overwhelmed by grumpiness!"
+    var tryAgain = "(Press Enter to try again)";
+    this.ctx.fillStyle = "black";
+    this.ctx.font = '16px Atari';
+    this.ctx.fillText(death, Game.DIM_X/2 - 325, Game.DIM_Y/2);
+    this.ctx.fillText(tryAgain, Game.DIM_X/2 - 250, Game.DIM_Y/2 + 25) 
+  }
+  
+  Game.prototype.restart = function() {
+    this.stop();
+    this.ship = new Asteroids.Ship();
+    this.asteroids = this.addAsteroids(5);
+    this.timer = Date.now();
+    this.points = 0;
+    this.start();
+  }
 
   Game.prototype.removeAsteroids = function() {
     for(var i = 0; i < this.asteroids.length; i++) {
       if (this.asteroids[i].delete === true) {
         this.points++;
+        var boom = new Audio("sounds/explosion.wav");
+        boom.play();
         var oldAst = this.asteroids.splice(i, 1)[0];
         oldAst.makeBabies(this);
       }
@@ -76,6 +97,8 @@
 
     this.asteroids.forEach(function (asteroid) {
       asteroid.draw(ctx);
+      
+      if (asteroid.explosion) {asteroid.explosion.draw(ctx);}
     });
 
     this.ship.bullets.forEach( function(bullet){
@@ -97,10 +120,6 @@
       bullet.move(Game.DIM_Y, Game.DIM_X);
       bullet.hitAsteroids(game.asteroids, game);
     });
-
-    this.removeBullets();
-    this.removeAsteroids();
-
   };
   
   Game.prototype.showTime = function(ctx) {
@@ -115,10 +134,20 @@
     ctx.font = '25 px Atari';
     ctx.fillText("Points:" + this.points, 5, Game.DIM_Y - 5)
   }
+  
+  Game.prototype.incrementLevel = function() {
+    if (this.asteroids.length === 0) {
+      this.level++;
+      this.asteroids = this.addAsteroids(5 + this.level * 3);
+    }
+  };
 
   Game.prototype.step = function(ctx) {
     this.move();
     this.draw(ctx);
+    this.removeBullets();
+    this.removeAsteroids();
+    this.incrementLevel();
     this.showTime(ctx);
     this.showPoints(ctx);
     this.checkCollisions();
@@ -127,13 +156,13 @@
   
   Game.prototype.startMeow = function() {
     alert("meow!");
-    var meow = new Audio("sounds/meow.mp3");
+    var meow = new Audio("sounds/meow.m4a");
     meow.play();
   };
 
   Game.prototype.start = function(canvasEl) {
 
-    var ctx = canvasEl.getContext("2d");
+    var ctx = this.ctx
     var game = this;
     this.game_timer = window.setInterval(function () {
       game.step(ctx);

@@ -1,12 +1,12 @@
 (function(root){
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-
   var Asteroid = Asteroids.Asteroid = function (pos, vel, radius) {
     this.pos = pos;
     this.vel = vel;
     this.radius = radius;
     this.delete = false;
+    this.explosion = null;
     this.direction = Math.random() * (Math.PI + 1);
   };
 
@@ -23,6 +23,9 @@
     ctx.rotate(this.direction);
     ctx.drawImage(img, xOffset, yOffset);
     ctx.restore();
+    if (this.delete) {
+      this.explosion = new Asteroids.Explosion([this.pos[0], this.pos[1]], this.radius);
+    }
   };
   
   Asteroid.prototype.makeBabies = function(game) {
@@ -43,7 +46,6 @@
     if (randPosY % 2 === 0) {
       randPosY = 0;
     } else { randPosX = 0; }
-    // var randRad = Math.floor(Math.random() * (41) + 10);
     var pos = [randPosY, randPosX];
     var vel = Asteroid.randomVec();
     return new Asteroid(pos, vel, 50);
