@@ -12,3 +12,5 @@ html, body {
   font-family: 'Atari';
   src: url(fonts/PressStart2P.ttf);
 }
+
+#meow { display: none }

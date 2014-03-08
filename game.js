@@ -47,6 +47,8 @@
         this.timer = Date.now() - this.timer;
         this.deathMessage();
         this.stop();
+        this.meow.pause();
+        this.meow.currentTime = 0;
         var game = this;
         key('enter', function() { game.restart(); });
       }
@@ -64,6 +66,7 @@
   
   Game.prototype.restart = function() {
     this.stop();
+    this.meow.pause();
     this.ship = new Asteroids.Ship();
     this.asteroids = this.addAsteroids(5);
     this.timer = Date.now();
@@ -155,9 +158,8 @@
   };
   
   Game.prototype.startMeow = function() {
-    alert("meow!");
-    var meow = new Audio("sounds/meow.m4a");
-    meow.play();
+    this.meow = document.getElementById("meow");
+    this.meow.play();
   };
 
   Game.prototype.start = function(canvasEl) {

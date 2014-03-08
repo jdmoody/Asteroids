@@ -9,7 +9,7 @@
     this.recharge = Date.now();
     this.radius = 10;
     this.bullets = [];
-    this.hyperbullets = true;
+    this.hyperbullets = false;
   };
 
   Asteroids.inherits(Ship, Asteroids.MovingObject);
@@ -41,6 +41,7 @@
       var bullet = new Asteroids.Bullet(this.pos, this.direction);
       this.bullets.push(bullet);
       var laser = new Audio("sounds/pewpew.wav");
+      laser.volume = 0.2;
       laser.play();
     }
   };
